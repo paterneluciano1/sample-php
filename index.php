@@ -21,19 +21,16 @@
 
 <?php
 
-require 'vendor/autoload.php'; // Chargez FedaPay SDK
+require 'vendor/autoload.php'; 
 
+// Importer le fichier Config qui gère  votre environnement Fedapay 
+
+include ('config.php');
+
+// Chargez FedaPay SDK
 // Appeler votre fonction FedaPay
 
 use FedaPay\Transaction;
-
-use FedaPay\FedaPay;
-
-// Configurer votre environnement FedaPay
-
-FedaPay::setApiKey('sk_sandbox_XXXXXXXXXXXXXXXXXX'); // Remplacez par votre clé secrète  API
-
-FedaPay::setEnvironment('environment'); // Mettez votre environnement. Changez en 'live' pour production
 
  // Récupération des informations saisies par l'utilisateur après validation du formulaire de paiement
 
@@ -43,9 +40,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nom = $_POST['nom'];
     $prenom = $_POST['prenom'];
     $email = $_POST['email'];
-    $numero = $_POST['numero'];
 
-    $callback_url ="http://localhost:80/Dosbyl/callback.php"; //callback url de votre site 
+    $callback_url ="https://phpsample.fedapay.com/callback.php"; //callback url de votre site 
     
     try {
 
@@ -58,11 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             "customer" => [
                 "firstname" =>  $prenom, // Utilisez $_POST pour récupérer les données du formulaire
                 "lastname" => $nom,
-                "email" => $email,
-                "phone_number" => [
-                    "number" => $numero,
-                    "country" => "bj"
-                ]
+                "email" => $email
             ]
         ]);
 
@@ -210,11 +202,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                                 <div class="mb-3">
                                     <input type="hidden" class="form-control" id="price" name="price" value="<?php echo $product['price']; ?>" required readonly>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label>Numéro</label>
-                                    <input type="text" name="numero" class="form-control" required>
                                 </div>
 
                                 <button type="submit" class="btn btn-primary mt-3">Payer <?php echo $product['price']; ?> FCFA</button>
