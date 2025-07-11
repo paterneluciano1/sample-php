@@ -1,1 +1,6 @@
 vendor/
+
+# Ignorer les fichiers de configuration CI et de déploiement
+drone.yml
+drone.yaml
+Procfile
