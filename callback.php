@@ -37,6 +37,6 @@ try {
 }
 
 // Rediriger vers index.php avec un message flash
-header("Location: index.php");
+header("Location: ./");
 exit();
 ?>
